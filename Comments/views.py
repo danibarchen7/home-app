@@ -12,37 +12,36 @@ class CommentsView(APIView):
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
-import tensorflow as tf
-from tensorflow import keras
-import os
-from tensorflow.keras.layers import TextVectorization
-import numpy as np
-import pandas as pd
 from rest_framework.permissions import AllowAny
-
-# os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
-os.environ['TF_FORCE_GPU_ALLOW_GROWTH'] = 'false'
+from rest_framework import status
+from .models import Comments
 class PredictView(APIView):
-    permission_classes = (AllowAny,)
+    permission_classes= (AllowAny,)
+    serializer_class = CommentSerializers
     def post(self, request):
-        data = request.data
-        input_data = data['input_data']
-        df = pd.read_csv(os.path.join('Comments','train.csv','train.csv'))
-        X = df['comment_text']
-        vectorizer = TextVectorization(max_tokens=200000,
-                               output_sequence_length=1800,
-                               output_mode='int')
-        vectorizer.adapt(X.values)
-        input_data = vectorizer(input_data)
-        # input_data = tf.strings.unicode_decode(input_data, 'UTF-8')
-        model = keras.models.load_model('Comments/toxicity.h5')
-        prediction = model.predict(np.expand_dims(input_data,0))
-        good =True
-        for idx, col in enumerate(df.columns[2:]):
-            if prediction[0][idx]>0.1:
-                good = False
-            else:
-                good = True    
-        return Response({'prediction': good})
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+class SingleComment(APIView):
+    def get (self,request,pk):
+        comment = Comments.objects.get(id=pk)
+        serializer = CommentSerializers(comment, many=False)
+        return Response(serializer.data)
+    def delete(self,request,pk):
+      comment = CommentSerializers.objects.get(id=pk)
+      comment.delete()
+      return Response(status=status.HTTP_204_NO_CONTENT)
+
+    def put(self, request, pk):
+
+        comment = Comments.objects.get(id=pk)
+        serializer = CommentSerializers(comment, data=request.data,partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)

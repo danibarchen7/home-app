@@ -20,4 +20,5 @@ class Properties(models.Model):
     pool = models.BooleanField(default=True)
     elevator = models.BooleanField(default=True)
     soloar_system = models.BooleanField(default=True)
+    counter = models.IntegerField(default=0)
     

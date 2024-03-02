@@ -34,6 +34,7 @@ urlpatterns = [
     # path('conversations/', include('chat.urls')),
     
     path('properties/',include('Property.urls')),
+    path('images/',include('Images.urls')),
     path('Cure/',include('Cure.urls')),
     path('Comments/',include('Comments.urls')),
     path('Favorites/',include('Favorites.urls')),
