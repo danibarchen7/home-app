@@ -3,11 +3,14 @@ from Customer.models import Customers
 from Property.models import Properties
 # Create your models here.
 import tensorflow as tf
-from tensorflow import keras
-import os
 from tensorflow.keras.layers import TextVectorization
+# from tensorflow.keras.layers.experimental.preprocessing import TextVectorization
+from tensorflow import keras
+# from keras.layers import TextVectorization
 import numpy as np
 import pandas as pd
+import os
+# import keras
 
 
 
@@ -17,7 +20,7 @@ class Comments(models.Model):
     date_time = models.DateTimeField(auto_now=False, auto_now_add=True)
     comments = models.CharField(max_length=2000)
     evaluation = models.BooleanField()
-    def create_related(self):
+    def save(self,*args, **kwargs):
         input_data = self.comments
         df = pd.read_csv(os.path.join('Comments','train.csv','train.csv'))
         X = df['comment_text']
@@ -31,9 +34,15 @@ class Comments(models.Model):
         prediction = model.predict(np.expand_dims(input_data,0))
         for idx, col in enumerate(df.columns[2:]):
             if prediction[0][idx]>0.1:
-                evaluation = False
+                self.evaluation = False
+                
             else:
-                evaluation = True 
+                self.evaluation = True 
+        if self.evaluation:        
+          prop = Properties.objects.get(id=self.idp.id)
+          prop.counter+=1
+          prop.save()        
+        super(Comments,self).save(*args, **kwargs)
     
     def update_counter(self):
         pro = Properties.objects.get(id=self.idp)

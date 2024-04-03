@@ -8,6 +8,10 @@ from .serializers import CommentSerializers
 class CommentsView(APIView):
     permission_classes = [permissions.AllowAny,]
     serializer_class = CommentSerializers
+    def get (self,request):
+        comment = Comments.objects.all()
+        serializer = CommentSerializers(comment, many=True)
+        return Response(serializer.data)
     
 
 from rest_framework.views import APIView

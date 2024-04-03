@@ -2,5 +2,6 @@ from django.urls import path
 from Property import views
 
 urlpatterns = [
-    path('property/',views.PropertiesView.as_view())
+    path('',views.PropertiesView.as_view()),
+    path('<int:pk>',views.SingleProperty.as_view())
 ]

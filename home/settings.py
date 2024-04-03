@@ -10,6 +10,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+
+
 from pathlib import Path
 import os
 from datetime import timedelta
@@ -46,7 +48,6 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     
     # 'rest_framework_simplejwt',
-    
     'rest_framework',
     'rest_framework.authtoken',
     # 'dj_rest_auth',
@@ -231,9 +232,11 @@ EMAIL_HOST_PASSWORD = 'ffrz peaf rtmx exyk'
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static') 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media') 
 MEDIA_URL = '/media/'
 MEDIAFILES_DIRS = [
     BASE_DIR / "media"
@@ -254,3 +257,27 @@ PUSHER_KEY = 'a8a6dcdd8e2cadbf2718'
 PUSHER_SECRET = 'adcb09443d95cde06f8e'
 PUSHER_CLUSTER = 'ap2'
 
+# import keras
+# import numpy as np
+# from keras import backend as K
+# import tensorflow as tf
+# from tensorflow.python.keras.backend import set_session
+# from keras.applications import vgg16
+
+
+# def get_session():
+#     config = tf.config.experimental.list_physical_devices('GPU')
+#     tf.config.experimental.set_memory_growth(config, True)
+#     return tf.Session(config=config)
+
+# K.set_session(get_session())
+
+# config = tf.config.experimental.list_physical_devices('GPU')
+# tf.config.experimental.set_memory_growth(config, True)
+# SESS = tf.Session(config=config)
+# print("model loading")
+# GRAPH1 = tf.get_default_graph()
+
+# set_session(SESS)
+# # Load the VGG model
+# VGG_MODEL = vgg16.VGG16(weights="imagenet")
