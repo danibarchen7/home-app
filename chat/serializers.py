@@ -1,5 +1,5 @@
 from Customer.serializers import UserSerializer
-from .models import Conversation, Message
+from .models import Conversation, Message,Notification
 from rest_framework import serializers
 
 
@@ -42,3 +42,7 @@ class ConversationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Conversation
         fields = ['id','initiator', 'receiver', 'message_set']
+
+class NotificationSerializer(serializers.ModelSerializer):
+    model =Notification
+    fields = '__all__'

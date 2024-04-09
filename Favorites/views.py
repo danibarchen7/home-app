@@ -29,17 +29,17 @@ class FavoriteView(APIView):
 class SingleFavoriteView(APIView):
     serializer_class = FavoriteSerializer
     def get(self,request,pk):
-        fav = Favorite.objects.get(id=pk)
+        fav = Favorite.objects.get(idc=pk)
         serializer = FavoriteSerializer(fav)
         return Response(serializer.data)
     
     def delete(self,request,pk):
-      fav = Favorite.objects.get(id=pk)
+      fav = Favorite.objects.get(idc=pk)
       fav.delete()
       return Response(status=status.HTTP_204_NO_CONTENT)
     
     def put(self,request,pk):
-        fav = Favorite.objects.get(id=pk)
+        fav = Favorite.objects.get(idc=pk)
         serializer = FavoriteSerializer(fav, data=request.data,partial=True)
         if serializer.is_valid():
             serializer.save()

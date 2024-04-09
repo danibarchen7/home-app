@@ -21,6 +21,6 @@ urlpatterns = [
     path('start/<int:conv_id>', views.post_message),
     path('<int:convo_id>/', views.get_conversation, name='get_conversation'),
     path('', views.conversations, name='conversations'),
-    path('new/', views.your_view, name='new'),
+    path('new/', views.MessageSendAPIView.as_view(), name='Message'),
     
 ]

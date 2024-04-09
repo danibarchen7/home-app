@@ -26,6 +26,8 @@ class Properties(models.Model):
     price = models.IntegerField(null=False,blank=False)
     area = models.FloatField()
     site = models.CharField( max_length=50)
+    lan = models.FloatField(default=0.0)
+    lat = models.FloatField(default=0.0)
     rating = models.IntegerField()
     n_bathroom = models.IntegerField()
     n_room = models.IntegerField()
@@ -41,6 +43,17 @@ class Properties(models.Model):
     soloar_system = models.BooleanField(default=True)
     counter = models.IntegerField(default=0)
     owner = models.ForeignKey(Customers, on_delete=models.CASCADE)
+    rate = models.IntegerField(default=0,null=True,blank=True)
+    counters = models.IntegerField(default=0,null=True,blank=True)
+    ratestate = models.BooleanField(default=False)  
+    count = models.IntegerField(default=0,null=True,blank=True)  
+    
+    def save(self,*args, **kwargs):
+        self.count+=1
+        if self.ratestate:
+            self.rate += self.counters
+            self.rating = int(self.rate/self.count)
+        super(Properties,self).save(*args, **kwargs)
     
     def __str__(self):
         return  str(self.owner)

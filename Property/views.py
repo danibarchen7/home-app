@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 from .serializers import PropertiesSerializer
 from .models import Properties
+from Customer.models import Customers
 # Create your views here.
 
 class PropertiesView(APIView):
@@ -19,9 +20,10 @@ class PropertiesView(APIView):
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
-    def get (self,request):
-        property = Properties.objects.all()
-        serializer = PropertiesSerializer(property, many=True)
+    def get (self,request,pk):
+        own = Customers.objects.get(id=pk)
+        property = Properties.objects.filter(owner=own)
+        serializer = self.serializer_class(property, many=True)
         return Response(serializer.data)
     
     
@@ -46,3 +48,20 @@ class SingleProperty(APIView):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+
+class AllProperties(APIView):
+    serializer_class = PropertiesSerializer
+    
+    def get(self,request):
+        properte = Properties.objects.all()
+        serializer = self.serializer_class(properte,many=True)
+        return Response(serializer.data)
+    
+    
+class Rateing(APIView):
+    def put(self,request,pk):
+        pro = Properties.objects.get(id=pk)
+        serializer = PropertiesSerializer(pro, data=request.data,partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)

@@ -170,7 +170,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'home.wsgi.application'
+# WSGI_APPLICATION = 'home.wsgi.application'
 
 
 # Database

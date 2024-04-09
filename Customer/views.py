@@ -51,27 +51,22 @@ class LogoutView(APIView):
 
 
 
-# class LoginView(APIView):
-#     permission_classes = (permissions.AllowAny,)
-#     authentication_classes = (TokenAuthentication,)
-
-#     def post(self, request):
-#         username = request.data.get('username')
-#         password = request.data.get('password')
-
-#         user = authenticate(username=username, password=password)
-#         if user is not None:
-#             token = Token.objects.create(user=user)
-#             login(request, user)
-#             # login(request, user)
-#             request.META['HTTP_AUTHORIZATION'] = 'Token ' + token.key
-#             # return redirect('myprofile:profile')
-#             return Response({"token": token.key})
-
-
 class CustomUserViewSet(generics.CreateAPIView):
-    serializer_class = RegisterSerializer
-    permission_classes = [AllowAny]
+    serializer_class = CustomUserSerializer
+    permission_classes = (AllowAny,)
+    def get(self,request):
+        user = Customers.objects.all()
+        serializer = self.serializer_class(user, many=True)
+        return Response(serializer.data)
+    
+
+class SingleCustomerView(APIView):
+    serializer_class = CustomUserSerializer
+    def get(self,request,pk):
+        customer = Customers.objects.get(id=pk)
+        serializer = self.serializer_class(customer)
+        return Response(serializer.data)
+
 
 from django.shortcuts import render
 from .serializers import UserSerializer
