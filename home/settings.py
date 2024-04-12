@@ -15,6 +15,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 import os
 from datetime import timedelta
+import dj_database_url
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -23,11 +24,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+# SECRET_KEY=os.environ.get('SECRET_KEY')
 SECRET_KEY = 'django-insecure-7b3_q(4mj&3xpt!@jsf+7o4_s(mzhunt45)l%#8#c4_5ye2vjg'
 
 # SECURITY WARNING: don't run with debug turned on in production!
+# DEBUG = os.environ.get("DEBUG","False").lower()=="true"
 DEBUG = True
-
+# ALLOWED_HOSTS=os.environ.get("ALLOWED_HOSTS").split(" ")
 ALLOWED_HOSTS = ["*"]
 
 AUTH_USER_MODEL = 'Customer.Customers'
@@ -78,6 +81,7 @@ MIDDLEWARE = [
     
     # 'home.tokenauth_middleware.TokenAuthMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -176,17 +180,30 @@ TEMPLATES = [
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#         # "TEST": {
+#         #     "NAME": BASE_DIR / "db.sqlite3",
+#         # },
+#     }
+# }
+# DATABASE['default']=dj_database_url.parse("postgres://home_app_database_user:n2GGUICCdiiWIl9boUVoe0RKcG7EtHYw@dpg-cobb54q1hbls73apu80g-a/home_app_database    ")
+# Replace the SQLite DATABASES configuration with PostgreSQL:
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-        # "TEST": {
-        #     "NAME": BASE_DIR / "db.sqlite3",
-        # },
-    }
+    'default': dj_database_url.config(
+        # Replace this value with your local database's connection string.
+        default='postgres://home_app_database_user:n2GGUICCdiiWIl9boUVoe0RKcG7EtHYw@dpg-cobb54q1hbls73apu80g-a/home_app_database',
+        conn_max_age=600
+    )
 }
-
-
+if not DEBUG:
+    # Tell Django to copy static assets into a path called `staticfiles` (this is specific to Render)
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+    # Enable the WhiteNoise storage backend, which compresses static files to reduce disk use
+    # and renames the files with unique names for each version to support long-term caching
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
