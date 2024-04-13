@@ -90,6 +90,7 @@ urllib3==2.1.0
 uvicorn==0.29.0
 websocket-client-py3==0.15.0
 Werkzeug==3.0.1
+gevent==20.5.2
 whitenoise==6.6.0
 wrapt==1.16.0
 zipp==3.17.0
