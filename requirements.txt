@@ -95,4 +95,4 @@ wrapt==1.16.0
 zipp==3.17.0
 zope.event==4.4
 zope.interface==5.1.0
-event==20.5.0
+event==23.9.0
