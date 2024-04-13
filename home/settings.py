@@ -267,12 +267,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CORS_ALLOW_ALL_ORIGINS = True
 
 
-from pusher import Pusher
-
-PUSHER_APP_ID = '1735915'
-PUSHER_KEY = 'a8a6dcdd8e2cadbf2718'
-PUSHER_SECRET = 'adcb09443d95cde06f8e'
-PUSHER_CLUSTER = 'ap2'
 
 # import keras
 # import numpy as np
