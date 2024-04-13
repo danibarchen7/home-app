@@ -64,10 +64,9 @@ INSTALLED_APPS = [
     
     # 'channels_redis',
     'pusher',
-    
+    'Customer',
     'Comments',
     'Cure',
-    'Customer',
     'Favorites',
     'Images',
     'Property',
