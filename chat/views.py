@@ -100,7 +100,6 @@ from .models import Message
 
 from rest_framework import authentication, status
 from rest_framework.response import Response
-from rest_framework_simplejwt.authentication import JWTAuthentication
 
 class MessageSendAPIView(APIView):
     permission_classes = (AllowAny,)
