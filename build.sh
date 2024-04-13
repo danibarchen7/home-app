@@ -18,6 +18,6 @@ python manage.py migrate Favorites
 python manage.py makemigrations Images
 python manage.py migrate Images
 python manage.py makemigrations Type
-python manage.py migrate Property  Type
+python manage.py migrate Type
 # Apply any outstanding database migrations
 python manage.py migrate
