@@ -194,7 +194,7 @@ TEMPLATES = [
 DATABASES = {
     'default': dj_database_url.config(
         # Replace this value with your local database's connection string.
-        default='postgres://home_app_database_user:n2GGUICCdiiWIl9boUVoe0RKcG7EtHYw@dpg-cobb54q1hbls73apu80g-a/home_app_database',
+        default='postgres://home_app_database_user:ok91uEC03hseDlLOhVri5T8ZT8JNQnL5@dpg-cod4l10l5elc73fh06eg-a/home_app_database_s7ij',
         conn_max_age=600
     )
 }
