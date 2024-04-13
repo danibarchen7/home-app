@@ -1,0 +1,8 @@
+services:
+  django:
+    build_command: |
+      pip install -r requirements.txt
+      python manage.py makemigrations
+      python manage.py migrate
+    deploy_command: |
+      gunicorn myproject.wsgi:application -b 0.0.0.0:$PORT
