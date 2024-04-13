@@ -7,7 +7,11 @@ pip install -r requirements.txt
 
 # Convert static asset files
 python manage.py collectstatic --no-input
-python manage.py makemigrations --app Customer --app chat --app Favorites --app Images --app Property --app Type 
-python manage.py migrate Customer Chat Favorites Images Property Type 
+python manage.py makemigrations  Customer  chat 
+python manage.py migrate Customer Chat  
+python manage.py makemigrations Favorites Images
+python manage.py migrate Favorites Images
+python manage.py makemigrations Property  Type
+python manage.py migrate Property  Type
 # Apply any outstanding database migrations
 python manage.py migrate
