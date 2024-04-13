@@ -40,6 +40,7 @@ AUTH_USER_MODEL = 'Customer.Customers'
 INSTALLED_APPS = [
     # 'channels',
     "daphne",
+    'Customer',
     'django.contrib.admin',
     'chat',
    
@@ -64,7 +65,7 @@ INSTALLED_APPS = [
     
     # 'channels_redis',
     'pusher',
-    'Customer',
+    
     'Comments',
     'Cure',
     'Favorites',
