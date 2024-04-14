@@ -19,5 +19,7 @@ python manage.py makemigrations Images
 python manage.py migrate Images
 python manage.py makemigrations Type
 python manage.py migrate Type
+python manage.py makemigrations Cure
+python manage.py migrate Cure
 # Apply any outstanding database migrations
 python manage.py migrate
