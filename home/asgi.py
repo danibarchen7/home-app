@@ -27,9 +27,9 @@ from channels.security.websocket import AllowedHostsOriginValidator
 from chat.consumers import ChatConsumer
 from django.urls import include, path, re_path
 from .tokenauth_middleware import TokenAuthMiddleware
-
+import django 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings.dev")
-
+django.setup()
 application = ProtocolTypeRouter(
     {
         "http": get_asgi_application(),
