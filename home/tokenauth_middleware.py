@@ -31,7 +31,7 @@
 
 #         return super().receive(websocket, message)
 
-from django.contrib.auth.models import AnonymousUser
+# from django.contrib.auth.models import AnonymousUser
 from channels.db import database_sync_to_async
 from channels.middleware import BaseMiddleware
 
