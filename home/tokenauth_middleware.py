@@ -1,4 +1,4 @@
-from django.contrib.auth.models import AnonymousUser
+# from django.contrib.auth.models import AnonymousUser
 from channels.db import database_sync_to_async
 from rest_framework.authtoken.models import Token
 from channels.middleware import BaseMiddleware
@@ -41,11 +41,12 @@ def get_user(token_key):
     try:
         token = Token.objects.get(key=token_key)
         return token.user
-    except (Token.DoesNotExist, DatabaseError) as e:  # Handle both token and database errors
-        logging.error(f"Error retrieving user for token {token_key}: {e}")
+    # except (Token.DoesNotExist, DatabaseError) as e:  # Handle both token and database errors
+    #     logging.error(f"Error retrieving user for token {token_key}: {e}")
+        # return AnonymousUser()
+    except Token.DoesNotExist:
+        from django.contrib.auth.models import AnonymousUser
         return AnonymousUser()
-    # except Token.DoesNotExist:
-    #     return AnonymousUser()
 
 
 class TokenAuthMiddleware(BaseMiddleware):
