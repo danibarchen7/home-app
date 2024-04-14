@@ -1,8 +1,8 @@
 # from django.contrib.auth.models import AnonymousUser
-from channels.db import database_sync_to_async
-from rest_framework.authtoken.models import Token
-from channels.middleware import BaseMiddleware
-import logging #new edit
+# from channels.db import database_sync_to_async
+# from rest_framework.authtoken.models import Token
+# from channels.middleware import BaseMiddleware
+# import logging #new edit
 # from django.conf import settings
 # from Customer.models import Customers as User
 # from channels.middleware import BaseMiddleware
@@ -32,12 +32,12 @@ import logging #new edit
 #         return super().receive(websocket, message)
 
 from django.contrib.auth.models import AnonymousUser
-from rest_framework.authtoken.models import Token
 from channels.db import database_sync_to_async
 from channels.middleware import BaseMiddleware
 
 @database_sync_to_async
 def get_user(token_key):
+    from rest_framework.authtoken.models import Token
     try:
         token = Token.objects.get(key=token_key)
         return token.user
